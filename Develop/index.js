@@ -29,6 +29,11 @@ const questions = [
     },
     {
         type: 'input',
+        message: 'Enter photo name:',
+        name: 'photo'
+    },
+    {
+        type: 'input',
         message: 'What are the contribution guidelines?',
         name: 'contribution',
     },
@@ -60,11 +65,6 @@ const questions = [
     },
 ];
 
-// TODO: Create a function to write README file
-// function writeToFile(fileName, data) {
-
-// }
-
 
 // Create a function to initialize app
 const init = async () => {
@@ -72,6 +72,7 @@ const init = async () => {
         const answers = await inquirer.prompt(questions)
         const readmeOutput = generateMarkdown(answers)
         await writePromise(`${answers.title}.md`, readmeOutput)
+        console.log("Read me done!")
     } catch(err){
         console.log(err);
     }
