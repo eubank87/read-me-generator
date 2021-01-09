@@ -29,11 +29,6 @@ const questions = [
     },
     {
         type: 'input',
-        message: 'Enter photo name:',
-        name: 'photo'
-    },
-    {
-        type: 'input',
         message: 'What are the contribution guidelines?',
         name: 'contribution',
     },
