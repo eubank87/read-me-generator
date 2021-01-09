@@ -1,7 +1,8 @@
 // Include packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
-const path = require('path');
+const utils = require('util');
+const writePromise = utils.promisify(fs.writeFile);
 const generateMarkdown = require('./utils/generateMarkdown');
 
 // Create an array of questions for user input
@@ -40,7 +41,12 @@ const questions = [
         type: 'list',
         message: 'Which License did you use?',
         name: 'license',
-        choices: ['MIT', 'Apche 2.0', 'GPL 3.0', 'BSD3'],
+        choices: ['MIT', 'Apache 2.0', 'IBM', 'Mozilla'],
+    },
+    {
+        type: 'input',
+        message: 'Enter link to deployed site:',
+        name: 'link',
     },
     {
         type: 'input',
@@ -55,12 +61,21 @@ const questions = [
 ];
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {
-    inquirer.prompt(questions)
-}
+// function writeToFile(fileName, data) {
 
-// TODO: Create a function to initialize app
-function init() {}
+// }
+
+
+// Create a function to initialize app
+const init = async () => {
+    try{
+        const answers = await inquirer.prompt(questions)
+        const readmeOutput = generateMarkdown(answers)
+        await writePromise(`${answers.title}.md`, readmeOutput)
+    } catch(err){
+        console.log(err);
+    }
+}
 
 // Function call to initialize app
 init();
